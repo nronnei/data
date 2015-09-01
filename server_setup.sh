@@ -160,7 +160,7 @@ sudo wget -A 'zip' -P ~/server/raw/zips http://srtm.csi.cgiar.org/SRT-ZIP/SRTM_V
 echo -e "\n5 of 7 complete...\n"
 sudo wget -A 'zip' -P ~/server/raw/zips http://srtm.csi.cgiar.org/SRT-ZIP/SRTM_V41/SRTM_Data_GeoTiff/srtm_22_05.zip
 echo -e "\n6 of 7 complete..."
-sudo wget -A 'zip' -P ~/server/raw/zips --output-document=sa.zip https://github.com/ronn4031/data/blob/master/sa.zip?raw=true
+sudo wget -A 'zip' -O ~/server/raw/zips/sa.zip https://github.com/ronn4031/data/blob/master/sa.zip?raw=true
 echo -e "\n7 of 7 complete..."
 
 
@@ -171,10 +171,12 @@ echo -e "\n\nDONE"
 ##
 echo -e "\n\Extracting and merging data..."
 
-sudo unzip '~/server/raw/zips/*.zip'
-sudo mv ~/server/raw/zips/*.tif ~/server/raw/*.tif
+cd ~/server/raw/zips
+sudo unzip '*.zip'
+sudo mv *.tif ~/server/raw/*.tif
+cd
 # Merge rasters with gdal_merge.py
-gdal_merge.py -o ~/server/raw/merged_dem.tif -of GTiff ~/server/raw/srtm_*.tif
+sudo gdal_merge.py -o ~/server/raw/merged_dem.tif -of GTiff ~/server/raw/srtm_*.tif
 
 echo -e "\n\nDONE"
 
@@ -219,8 +221,8 @@ sudo npm install tilestrata-disk --save
 sudo npm install tilestrata-mapnik --save
 echo -e "\nCleaning up..."
 cd
-sudo rm -rf ~/server/intermediate
-sudo rm -rf ~/server/raw
+#sudo rm -rf ~/server/intermediate
+#sudo rm -rf ~/server/raw
 
 echo -e "\n\nDONE"
 echo -e "\n\nAll tasks complete. Thanks for setting me up! Enjoy!"
