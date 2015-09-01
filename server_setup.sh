@@ -173,7 +173,9 @@ echo -e "\n\Extracting and merging data..."
 
 cd ~/server/raw/zips
 sudo unzip '*.zip'
-sudo mv *.tif ~/server/raw/*.tif
+sudo mv *.tif ~/server/raw/
+cd sa
+sudo mv sa* ~/server/raw
 cd
 # Merge rasters with gdal_merge.py
 sudo gdal_merge.py -o ~/server/raw/merged_dem.tif -of GTiff ~/server/raw/srtm_*.tif
@@ -187,7 +189,7 @@ echo -e "\n\nPreprocessing raster data..."
 
 # Change DEM projection to Spherical Mercator
 echo -e "\nReproject DEM to EPSG:3857  --->"
-gdalwarp -s_srs "EPSG:4326" -t_srs "EPSG:3857" -co COMPRESS=DEFLATE -of GTiff -srcnodata "-32768" -multi -dstnodata "-32768" -te -9314704.367077 4375283.464516 -8225840.114969 5201489.272209 -r bilinear -cutline ~/server/raw/sa_3857.shp ~server/raw/merged_dem.tif ~/server/intermediate/rpf_dem.tif
+gdalwarp -s_srs "EPSG:4326" -t_srs "EPSG:3857" -co COMPRESS=DEFLATE -of GTiff -srcnodata "-32768" -multi -dstnodata "-32768" -te -9314704.367077 4375283.464516 -8225840.114969 5201489.272209 -r bilinear -cutline ~/server/raw/sa_3857.shp ~/server/raw/merged_dem.tif ~/server/intermediate/rpf_dem.tif
 # Generate color relief map
 write_ramp > ~/server/raw/ramp.txt
 echo -e "\n\nGenerating color relief  --->"
