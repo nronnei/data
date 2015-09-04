@@ -199,10 +199,10 @@ echo -e "\nSet nodata values for color relief  --->"
 gdalwarp -co COMPRESS=DEFLATE -of GTiff -srcnodata "255 255 255" -multi -dstnodata "255 255 255" -te -9314704.367077 4375283.464516 -8225840.114969 5201489.272209 -r bilinear -cutline ~/server/raw/sa_3857.shp ~/server/intermediate/rpf_color_relief.tif ~/server/src/color_dem.tif
 # Generate slope overlay
 echo -e "\nGenerating slope overlay  --->"
-gdaldem slope ~/server/intermediate/rpf_dem.tif ~/server/final/slope.tif -of GTiff
+gdaldem slope ~/server/intermediate/rpf_dem.tif ~/server/src/slope.tif -of GTiff
 # Generate hillshade
 echo -e "\nGenerating hillshade  --->"
-gdaldem hillshade ~/server/intermediate/rpf_dem.tif ~/server/final/shade.tif -of GTiff -z 2
+gdaldem hillshade ~/server/intermediate/rpf_dem.tif ~/server/src/shade.tif -of GTiff -z 2
 
 echo -e "\n\nDONE"
 
